@@ -1,5 +1,37 @@
 import React from 'react';
 import { ConversationalForm } from 'conversational-form';
+import data from './anousdejouer.json';
+
+// Data processing
+
+let sections_grouped = []
+let in_section = null
+let section = {
+  no: 3,
+  sections: [3]
+}
+
+// Loop section
+data.sections.forEach(current_section => {
+  in_section = sections_grouped.filter(group => group.sections.includes(current_section.no))
+  console.log(in_section)
+  // If section is in sections append no
+  if (!!in_section.length) {
+
+
+  // Else create new section
+  } else {
+    sections_grouped.push(
+      {
+        no: current_section.no,
+        sections: [current_section.no]
+      }
+    )
+  }
+})
+
+console.log(sections_grouped)
+
 
 export default class Form extends React.Component {
   constructor(props) {
