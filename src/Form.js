@@ -3,7 +3,6 @@ import { ConversationalForm } from 'conversational-form';
 import data from './anousdejouer.json';
 
 // Data processing
-
 let sections_grouped = []
 let in_section = null
 
@@ -29,40 +28,39 @@ data.sections.forEach(current_section => {
   }
 })
 
-console.log('sections_grouped', sections_grouped)
+// console.log('sections_grouped', sections_grouped)
 
 let labels_question3 = [
   {
     no: '1',
-    label: 'Qu’une seule fois',
+    title: 'Qu’une seule fois',
     sections: '5'
   },
   {
     no: '2',
-    label: 'Plus longtemps',
+    title: 'Plus longtemps',
     sections: sections_grouped.filter(group => group.no === "3")[0].sections.filter(s => s !== '5')
   },
   {
     no: '3',
-    label: 'Qu’une seule fois',
+    title: 'Qu’une seule fois',
     sections: '3'
   }
 ]
 
-console.log('labels_question3', labels_question3)
+// console.log('labels_question3', labels_question3)
 
 let i18n = {
   'Boîte à outils': '...'
 }
 
-console.log('i18n', i18n)
+// console.log('i18n', i18n)
 
 let question1 = {
   'tag': 'fieldset',
   'cf-questions': 'Qu‘est-ce que tu veux faire?',
   'id': 'question1',
   'children': data.sections.filter(s => ['1', '2', '3', '4'].includes(s.no)).map(section => {
-    console.log(section)
     return {
       'tag': 'input',
       'type': 'radio',
@@ -73,152 +71,80 @@ let question1 = {
   })
 }
 
-console.log('question1', question1)
+// console.log('question1', question1)
+
+let question2 = {
+  'tag': 'fieldset',
+  'cf-questions': 'Quel domaine t‘intéresse?',
+  'id': 'question2',
+  'children': data.themes.map(theme => {
+    return {
+      'tag': 'input',
+      'type': 'radio',
+      'name': 'question2',
+      'cf-conditional-question1': '1||2||3',
+      'value': theme.no,
+      'cf-label': theme.title
+    }
+  })
+}
+
+// console.log('question2', question2)
+
+let question3 = {
+  'tag': 'fieldset',
+  'cf-questions': 'Aimerais-tu t’engager une seule fois ou de manière répétitive?',
+  'id': 'question3',
+  'children': labels_question3.map(label => {
+    return {
+      'tag': 'input',
+      'type': 'radio',
+      'name': 'question3',
+      'cf-conditional-question1': '3',
+      'value': label.no,
+      'cf-label': label.title
+    }
+  })
+}
+
+// console.log('question3', question3)
+
+let question4 = {
+  'tag': 'fieldset',
+  'cf-questions': 'Dans quel canton aimerais-tu t’engager?',
+  'id': 'question4',
+  'children': data.cantons.filter(c => c.articles.length > 0).map(canton => {
+    return {
+      'tag': 'input',
+      'type': 'radio',
+      'name': 'question4',
+      'cf-conditional-question1': '1||2||3',
+      'value': canton.no,
+      'cf-label': canton.title
+    }
+  })
+}
+
+// console.log('question3', question3)
 
 let form_fields = [
   question1,
+  question2,
+  question3,
+  question4,
 
-  {
-    'tag': 'fieldset',
-    'cf-questions': 'Quel theme veulent-ils?',
-    'id': 'question2',
-    'children': [
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'theme',
-        'cf-conditional-question1': 'engage||interoge||inspire',
-        'value': 'theme1',
-        'cf-label': 'Theme 1'
-      },
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'theme',
-        'cf-conditional-question1': 'engage||interoge||inspire',
-        'value': 'theme2',
-        'cf-label': 'Theme 2'
-      },
-    ]
-  },
-
-  {
-    'tag': 'fieldset',
-    'cf-questions': 'Duree?',
-    'id': 'question3',
-    'children': [
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'duree',
-        'cf-conditional-question1': 'engage||interoge',
-        'value': 'appels',
-        'cf-label': 'Appels'
-      },
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'duree',
-        'cf-conditional-question1': 'engage||interoge',
-        'value': 'events',
-        'cf-label': 'Events'
-      },
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'duree',
-        'cf-conditional-question1': 'engage||interoge',
-        'value': 'projects',
-        'cf-label': 'Projects'
-      },
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'duree',
-        'cf-conditional-question1': 'engage||interoge',
-        'value': 'gesets',
-        'cf-label': 'Gesets'
-      },
-    ]
-  },
-
-  {
-    'tag': 'fieldset',
-    'cf-questions': 'Canton?',
-    'id': 'question4',
-    'children': [
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'canton',
-        'cf-conditional-question1': 'engage',
-        'value': 'fribourg',
-        'cf-label': 'Fribourg'
-      },
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'canton',
-        'cf-conditional-question1': 'engage',
-        'value': 'neuchatel',
-        'cf-label': 'Neuchatel'
-      },
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'canton',
-        'cf-conditional-question1': 'engage',
-        'value': 'bern',
-        'cf-label': 'Bern'
-      },
-      {
-        'tag': 'input',
-        'type': 'radio',
-        'name': 'canton',
-        'cf-conditional-question1': 'engage',
-        'value': 'lausanne',
-        'cf-label': 'Lausanne'
-      },
-    ]
-  },
-
-  {
-    'tag': 'cf-robot-message',
-    'name': 'outils-fin',
-    'cf-conditional-question1': 'outils',
-    'cf-questions': 'Fin outils'
-  },
-  {
-    'tag': 'cf-robot-message',
-    'name': 'outils-fin',
-    'cf-conditional-question1': 'inspire',
-    'cf-questions': 'Fin inspire'
-  },
-  {
-    'tag': 'cf-robot-message',
-    'name': 'outils-fin',
-    'cf-conditional-question1': 'interoge',
-    'cf-questions': 'Fin interoge'
-  },
-  {
-    'tag': 'cf-robot-message',
-    'name': 'outils-fin',
-    'cf-conditional-question1': 'engage',
-    'cf-questions': 'Fin engage'
-  },
-
-  {
-    'tag': 'cf-robot-message',
-    'cf-questions': "Question1: {question1}&&Question2: {question2}&&Question3: {question3}&&Question4: {question4}"
-  },
+  // {
+  //   'tag': 'cf-robot-message',
+  //   'cf-questions': "Question1: {question1}&&Question2: {question2}&&Question3: {question3}&&Question4: {question4}"
+  // },
 ]
 
 export default class Form extends React.Component {
   constructor(props) {
-    super(props);
-    this.formFields = form_fields;
-    
-    this.submitCallback = this.submitCallback.bind(this);
+    super(props)
+    this.formFields = form_fields
+    this.submitCallback = this.submitCallback.bind(this)
+    this.state = {'showResults': false}
   }
   
   componentDidMount() {
@@ -229,23 +155,65 @@ export default class Form extends React.Component {
         // loadExternalStyleSheet: false
       },
       tags: this.formFields
-    });
-    this.elem.appendChild(this.cf.el);
+    })
+    this.elem.appendChild(this.cf.el)
   }
   
   submitCallback() {
-    var formDataSerialized = this.cf.getFormData(true);
-    console.log("Formdata, obj:", formDataSerialized);
-    this.cf.addRobotChatResponse("You are done. Check the dev console for form data output.")
+    var response = this.cf.getFormData(true)
+
+    let question1 = response.question1[0]
+    let question2 = response.question2[0]
+    let question3 = response.question3[0]
+    let question4 = response.question4[0]
+    // console.log("Antworten:", question1, question2, question3, question4)
+
+    let articles = []
+
+    // Filter question1
+    if (question1 != "") {
+      let sections_filtered = sections_grouped.filter(s => s.no === question1)[0].sections
+      articles = data.articles.filter(a => a.section in sections_filtered)
+    }
+    // Filter question2
+    if (question2 != "") {
+      let theme_articles = data.themes.filter(t => t.no === question2)[0].articles
+      articles = articles.filter(a => a.no in theme_articles)
+    }
+
+    // Filter question3
+    if (question3 != "") {
+      let label_sections = labels_question3.filter(l => l.no === question3)[0].sections
+      articles = articles.filter(a => a.section in label_sections)
+    }
+
+    // Filter question4
+    if (question4 != "") {
+      let cantons_articles = data.cantons.filter(c => c.no === question4)[0].articles
+      articles = articles.filter(a => a.no in cantons_articles)
+    }
+
+    console.log(articles)
+    this.setState({showResults: true});
+
+    this.cf.addRobotChatResponse(`You are done. There are ${articles.length} articles to display. Refresh browser to restart.`)
   }
   
   render() {
+    const showResults = this.state.showResults;
     return (
-      <div>
-        <div
-          ref={ref => this.elem = ref}
-        />
-      </div>
-    );
+        <>
+        <div>
+          <div
+            ref={ref => this.elem = ref}
+          />
+        </div>
+        { showResults ? <style>
+          {/* .conversational-form--show {
+            opacity: 0;
+          } */}
+        </style> : <style></style>}
+        </>
+      )
   }
 }
