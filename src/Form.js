@@ -54,7 +54,7 @@ let i18n = {
   'Boîte à outils': '...'
 }
 
-// console.log('i18n', i18n)
+console.log('i18n', i18n)
 
 let question1 = {
   'tag': 'fieldset',
@@ -171,24 +171,24 @@ export default class Form extends React.Component {
     let articles = []
 
     // Filter question1
-    if (question1 != "") {
+    if (question1 !== "") {
       let sections_filtered = sections_grouped.filter(s => s.no === question1)[0].sections
       articles = data.articles.filter(a => a.section in sections_filtered)
     }
     // Filter question2
-    if (question2 != "") {
+    if (question2 !== "") {
       let theme_articles = data.themes.filter(t => t.no === question2)[0].articles
       articles = articles.filter(a => a.no in theme_articles)
     }
 
     // Filter question3
-    if (question3 != "") {
+    if (question3 !== "") {
       let label_sections = labels_question3.filter(l => l.no === question3)[0].sections
       articles = articles.filter(a => a.section in label_sections)
     }
 
     // Filter question4
-    if (question4 != "") {
+    if (question4 !== "") {
       let cantons_articles = data.cantons.filter(c => c.no === question4)[0].articles
       articles = articles.filter(a => a.no in cantons_articles)
     }
