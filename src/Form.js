@@ -28,13 +28,13 @@ data.sections.forEach(current_section => {
   }
 })
 
-// console.log('sections_grouped', sections_grouped)
+console.log('sections_grouped', sections_grouped)
 
 let labels_question3 = [
   {
     no: '1',
     title: 'Qu’une seule fois',
-    sections: '5'
+    sections: ['5']
   },
   {
     no: '2',
@@ -43,15 +43,15 @@ let labels_question3 = [
   },
   {
     no: '3',
-    title: 'Qu’une seule fois',
-    sections: '3'
+    title: 'Peu importe',
+    sections: ['*']
   }
 ]
 
 // console.log('labels_question3', labels_question3)
 
 let i18n = {
-  'Boîte à outils': '...'
+  'Boîte à outils': 'Je consulte la boîte à outils'
 }
 
 console.log('i18n', i18n)
@@ -61,12 +61,13 @@ let question1 = {
   'cf-questions': 'Qu‘est-ce que tu veux faire?',
   'id': 'question1',
   'children': data.sections.filter(s => ['1', '2', '3', '4'].includes(s.no)).map(section => {
+    let label = i18n[section.title]
     return {
       'tag': 'input',
       'type': 'radio',
       'name': 'question1',
       'value': section.no,
-      'cf-label': section.title
+      'cf-label': label || section.title
     }
   })
 }
@@ -118,7 +119,7 @@ let question4 = {
       'tag': 'input',
       'type': 'radio',
       'name': 'question4',
-      'cf-conditional-question1': '1||2||3',
+      'cf-conditional-question1': '2||3',
       'value': canton.no,
       'cf-label': canton.title
     }
@@ -166,34 +167,44 @@ export default class Form extends React.Component {
     let question2 = response.question2[0]
     let question3 = response.question3[0]
     let question4 = response.question4[0]
-    // console.log("Antworten:", question1, question2, question3, question4)
+    console.log("Antworten:", question1, question2, question3, question4)
 
     let articles = []
 
     // Filter question1
     if (question1 !== "") {
       let sections_filtered = sections_grouped.filter(s => s.no === question1)[0].sections
-      articles = data.articles.filter(a => a.section in sections_filtered)
+      articles = data.articles.filter(a => sections_filtered.includes(a.section))
+      console.log("Articles1:", articles)
     }
+
     // Filter question2
     if (question2 !== "") {
       let theme_articles = data.themes.filter(t => t.no === question2)[0].articles
-      articles = articles.filter(a => a.no in theme_articles)
+      articles = articles.filter(a => theme_articles.includes(parseInt(a.no)))
+      console.log("Articles2:", articles, theme_articles)
     }
 
     // Filter question3
     if (question3 !== "") {
       let label_sections = labels_question3.filter(l => l.no === question3)[0].sections
-      articles = articles.filter(a => a.section in label_sections)
+      if (label_sections[0] !== '*'){
+        articles = articles.filter(a => label_sections.includes(a.section))
+      }
+      console.log("Articles3:", articles)
+
     }
 
     // Filter question4
     if (question4 !== "") {
       let cantons_articles = data.cantons.filter(c => c.no === question4)[0].articles
-      articles = articles.filter(a => a.no in cantons_articles)
+      articles = articles.filter(a => cantons_articles.includes(parseInt(a.no)))
+      console.log("Articles4:", articles, cantons_articles)
     }
 
-    console.log(articles)
+    // let articles_grouped = articles.reduce()
+
+    console.log("Articles:", articles)
     this.setState({showResults: true});
 
     this.cf.addRobotChatResponse(`You are done. There are ${articles.length} articles to display. Refresh browser to restart.`)
