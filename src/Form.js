@@ -1,6 +1,7 @@
-import React from 'react';
-import { ConversationalForm } from 'conversational-form';
-import data from './anousdejouer.json';
+import React from 'react'
+import { ConversationalForm } from 'conversational-form'
+import data from './anousdejouer.json'
+import Result from './Result'
 
 // Data processing
 let sections_grouped = []
@@ -203,28 +204,32 @@ export default class Form extends React.Component {
     }
 
     // let articles_grouped = articles.reduce()
-
     console.log("Articles:", articles)
-    this.setState({showResults: true});
+    
+    this.cf.addRobotChatResponse(`Vous avez terminé. Nous avons trouvé ${articles.length} articles à afficher.`)
 
-    this.cf.addRobotChatResponse(`You are done. There are ${articles.length} articles to display. Refresh browser to restart.`)
+    setTimeout(function(){
+      this.setState({showResults: articles})
+    }.bind(this),2000);
   }
   
   render() {
     const showResults = this.state.showResults;
-    return (
-        <>
-        <div>
-          <div
-            ref={ref => this.elem = ref}
-          />
-        </div>
-        { showResults ? <style>
-          {/* .conversational-form--show {
-            opacity: 0;
-          } */}
-        </style> : <style></style>}
-        </>
-      )
+    // console.log(showResults)
+
+    if (showResults) {
+      return <div>
+        <div style={{display: 'none'}}
+          ref={ref => this.elem = ref}
+        />
+        <Result articles={showResults} />
+      </div>
+    } else {
+      return <div>
+        <div
+          ref={ref => this.elem = ref}
+        />
+      </div>
+    }
   }
 }
