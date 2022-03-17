@@ -7,7 +7,7 @@ function Result(props) {
     <Grid fluid>
       <Row className="center-xs">
         <Col>
-          <a className="link-large" href="">Redémarrer le chat</a>
+          <a className="link-large" href="/">Redémarrer le chat</a>
         </Col>
       </Row>
       <Row className="center-xs">
