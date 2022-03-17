@@ -20,7 +20,7 @@ function Result(props) {
           <Col key={article.no} xs={12} sm={6} md={4} lg={3}>
             <div className="box">
               <p dangerouslySetInnerHTML={{__html: article.title }}/>
-              { article.image ? <img style={{width: '100%'}} alt="Article Image" src={article.image} /> : <img style={{width: '100%'}} alt="Image Placeholder" src={placeholder} /> }            
+              { article.image ? <img style={{width: '100%'}} alt="Article" src={article.image} /> : <img style={{width: '100%'}} alt="Placeholder" src={placeholder} /> }            
               <a target="_blank" rel="noreferrer" href={article.url}>Lien</a>
             </div>
           </Col>
