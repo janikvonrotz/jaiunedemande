@@ -29,7 +29,7 @@ data.sections.forEach(current_section => {
   }
 })
 
-console.log('sections_grouped', sections_grouped)
+// console.log('sections_grouped', sections_grouped)
 
 let labels_question3 = [
   {
@@ -39,7 +39,7 @@ let labels_question3 = [
   },
   {
     no: '2',
-    title: 'Plus longtemps',
+    title: 'De manière régulière',
     sections: sections_grouped.filter(group => group.no === "3")[0].sections.filter(s => s !== '5')
   },
   {
@@ -52,14 +52,17 @@ let labels_question3 = [
 // console.log('labels_question3', labels_question3)
 
 let i18n = {
-  'Boîte à outils': 'Je consulte la boîte à outils'
+  'Boîte à outils': 'J‘ai besoin d‘outils !​',
+  'Je m&#8217;inspire': 'Je veux m‘inspirer de projets déjà existants !',
+  'Je m&#8217;engage': 'Je veux m‘engager !​',
+  'Je m&#8217;interroge': 'Je m‘interroge !​',
 }
 
-console.log('i18n', i18n)
+// console.log('i18n', i18n)
 
 let question1 = {
   'tag': 'fieldset',
-  'cf-questions': 'Qu‘est-ce que tu veux faire?',
+  'cf-questions': 'Qu‘est-ce que tu veux faire ?',
   'id': 'question1',
   'children': data.sections.filter(s => ['1', '2', '3', '4'].includes(s.no)).map(section => {
     let label = i18n[section.title]
@@ -77,7 +80,7 @@ let question1 = {
 
 let question2 = {
   'tag': 'fieldset',
-  'cf-questions': 'Quel domaine t‘intéresse?',
+  'cf-questions': 'Quel domaine t‘intéresse ?',
   'id': 'question2',
   'children': data.themes.map(theme => {
     return {
@@ -95,7 +98,7 @@ let question2 = {
 
 let question3 = {
   'tag': 'fieldset',
-  'cf-questions': 'Aimerais-tu t’engager une seule fois ou de manière répétitive?',
+  'cf-questions': 'Aimerais-tu t’engager une seule fois ou de manière régulière ?',
   'id': 'question3',
   'children': labels_question3.map(label => {
     return {
@@ -113,7 +116,7 @@ let question3 = {
 
 let question4 = {
   'tag': 'fieldset',
-  'cf-questions': 'Dans quel canton aimerais-tu t’engager?',
+  'cf-questions': 'Dans quel canton aimerais-tu t’engager ?',
   'id': 'question4',
   'children': data.cantons.filter(c => c.articles.length > 0).map(canton => {
     return {
@@ -168,7 +171,7 @@ export default class Form extends React.Component {
     let question2 = response.question2[0]
     let question3 = response.question3[0]
     let question4 = response.question4[0]
-    console.log("Antworten:", question1, question2, question3, question4)
+    // console.log("Response:", question1, question2, question3, question4)
 
     let articles = []
 
@@ -176,14 +179,14 @@ export default class Form extends React.Component {
     if (question1 !== "") {
       let sections_filtered = sections_grouped.filter(s => s.no === question1)[0].sections
       articles = data.articles.filter(a => sections_filtered.includes(a.section))
-      console.log("Articles1:", articles)
+      // console.log("Articles1:", articles)
     }
 
     // Filter question2
     if (question2 !== "") {
       let theme_articles = data.themes.filter(t => t.no === question2)[0].articles
       articles = articles.filter(a => theme_articles.includes(parseInt(a.no)))
-      console.log("Articles2:", articles, theme_articles)
+      // console.log("Articles2:", articles, theme_articles)
     }
 
     // Filter question3
@@ -192,7 +195,7 @@ export default class Form extends React.Component {
       if (label_sections[0] !== '*'){
         articles = articles.filter(a => label_sections.includes(a.section))
       }
-      console.log("Articles3:", articles)
+      // console.log("Articles3:", articles)
 
     }
 
@@ -200,11 +203,11 @@ export default class Form extends React.Component {
     if (question4 !== "") {
       let cantons_articles = data.cantons.filter(c => c.no === question4)[0].articles
       articles = articles.filter(a => cantons_articles.includes(parseInt(a.no)))
-      console.log("Articles4:", articles, cantons_articles)
+      // console.log("Articles4:", articles, cantons_articles)
     }
 
     // let articles_grouped = articles.reduce()
-    console.log("Articles:", articles)
+    // console.log("Articles:", articles)
     
     this.cf.addRobotChatResponse(`Vous avez terminé. Nous avons trouvé ${articles.length} articles à afficher.`)
 

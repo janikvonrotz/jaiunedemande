@@ -25,6 +25,8 @@ a {
   color: #303030;
   padding: 0.5rem;
   text-decoration: none;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 a:hover {
@@ -34,6 +36,8 @@ a:hover {
 
 a.link-large {
   font-size: 24px;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .box {
