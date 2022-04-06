@@ -4,7 +4,7 @@ const placeholder = "https://entraide-romande.ch/wp-content/uploads/2020/04/Entr
 
 function Result(props) {
   return (
-    <Grid fluid>
+    <Grid className="results" fluid>
       <Row className="center-xs">
         <Col>
           <a className="link-large" href="/">Redémarrer le chat</a>

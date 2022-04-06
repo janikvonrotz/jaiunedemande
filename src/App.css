@@ -1,3 +1,15 @@
+:root {
+  --font-color: #f4d02b;
+  --border-color: #f4d02b;
+  --background-color: #856da6;
+}
+
+/* #303030 */
+
+#root{
+  background: var(--background-color)
+}
+
 .App {
   text-align: center;
   margin-right: auto;
@@ -13,16 +25,20 @@
   justify-content: center;
 }
 
+.results p {
+  color: var(--font-color);
+}
+
 .box p {
   margin-top: 0;
 }
 
 a {
-  border: 1px solid #303030;
+  border: 1px solid var(--border-color);
   border-radius: calc(24px * .88);
   line-height: 3rem;
   font-size: 16px;
-  color: #303030;
+  color: var(--font-color);
   padding: 0.5rem;
   text-decoration: none;
   padding-left: 1rem;
@@ -30,8 +46,8 @@ a {
 }
 
 a:hover {
-  color: #e5e6ea;
-  background-color: #303030;
+  background-color: var(--font-color);
+  color: var(--background-color);
 }
 
 a.link-large {
@@ -43,7 +59,7 @@ a.link-large {
 .box {
   padding: 1rem;
   margin: 1rem;
-  border: 1px solid #e5e6ea;
+  border: 1px solid var(--border-color);
   border-radius: calc(24px * .88);
 }
 
