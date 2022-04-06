@@ -60,6 +60,12 @@ let i18n = {
 
 // console.log('i18n', i18n)
 
+let greeting = 'C‘est anousdejouer.ch&&La plateforme des projets et associations de jeunes. Inspire-toi, interroge-toi, outille-toi et engage-toi ici et maintenant !'
+let message1 = {
+  'tag': 'cf-robot-message',
+  'cf-questions': greeting,
+}
+
 let question1 = {
   'tag': 'fieldset',
   'cf-questions': 'Qu‘est-ce que tu veux faire ?',
@@ -133,6 +139,7 @@ let question4 = {
 // console.log('question3', question3)
 
 let form_fields = [
+  message1,
   question1,
   question2,
   question3,
