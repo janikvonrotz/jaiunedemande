@@ -49,18 +49,47 @@ let labels_question3 = [
   }
 ]
 
+let labels_question5 = [
+  {
+    no: '1',
+    title: 'de l’aide pour mon projet',
+    sections: ['10']
+  },
+  {
+    no: '2',
+    title: 'de l’aide pour mon événement',
+    sections: ['10']
+  },
+  {
+    no: '3',
+    title: 'un soutien financier',
+    sections: ['10']
+  },
+  {
+    no: '4',
+    title: 'un espace',
+    sections: ['10']
+  },
+  {
+    no: '5',
+    title: 'du matériel',
+    sections: ['10']
+  }
+]
+
 // console.log('labels_question3', labels_question3)
 
 let i18n = {
   'Boîte à outils': 'J‘ai besoin d‘outils !​',
   'Je m&#8217;inspire': 'Je veux m‘inspirer de projets déjà existants !',
   'Je m&#8217;engage': 'Je veux m‘engager !​',
-  'Je m&#8217;interroge': 'Je m‘interroge !​',
+  'Je m&#8217;interroge': 'Je m’interroge sur mes valeurs et mes combats !',
+  'Canton de Genève': 'Genève'
 }
 
 // console.log('i18n', i18n)
 
-let greeting = 'C‘est anousdejouer.ch&&La plateforme des projets et associations de jeunes. Inspire-toi, interroge-toi, outille-toi et engage-toi ici et maintenant !'
+let greeting = 'Bienvenue sur anousdejouer.ch !&&La plateforme des projets et associations de jeunes. Inspire-toi, interroge-toi, outille-toi et engage-toi ici et maintenant !'
 let message1 = {
   'tag': 'cf-robot-message',
   'cf-questions': greeting,
@@ -68,7 +97,7 @@ let message1 = {
 
 let question1 = {
   'tag': 'fieldset',
-  'cf-questions': 'Qu‘est-ce que tu veux faire ?',
+  'cf-questions': 'Qu’est-ce que tu veux faire ? Que cherches-tu ?',
   'id': 'question1',
   'children': data.sections.filter(s => ['1', '2', '3', '4'].includes(s.no)).map(section => {
     let label = i18n[section.title]
@@ -124,14 +153,14 @@ let question4 = {
   'tag': 'fieldset',
   'cf-questions': 'Dans quel canton aimerais-tu t’engager ?',
   'id': 'question4',
-  'children': data.cantons.filter(c => c.articles.length > 0).map(canton => {
+  'children': data.cantons.filter(c => c.articles.length > 1).map(canton => {
     return {
       'tag': 'input',
       'type': 'radio',
       'name': 'question4',
-      'cf-conditional-question1': '2||3',
+      'cf-conditional-question1': '3',
       'value': canton.no,
-      'cf-label': canton.title
+      'cf-label': i18n[canton.title] || canton.title
     }
   })
 }
